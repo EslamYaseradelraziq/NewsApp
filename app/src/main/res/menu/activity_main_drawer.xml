@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_Categories"
+        android:icon="@drawable/ic_settings"
+        android:title="Categories" />
+    <item
+        android:id="@+id/nav_Settings"
+        android:icon="@drawable/ic_categories"
+        android:title="Settings" />
+</menu>
