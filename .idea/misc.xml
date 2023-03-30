@@ -4,11 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Projects/News_Api/app/src/main/res/drawable/ic_image.xml" value="0.1725" />
+        <entry key="..\:/Projects/News_Api/app/src/main/res/drawable/tab_selected_background.xml" value="0.1725" />
+        <entry key="..\:/Projects/News_Api/app/src/main/res/drawable/tab_selector.xml" value="0.1725" />
+        <entry key="..\:/Projects/News_Api/app/src/main/res/drawable/tab_unselected_background.xml" value="0.1725" />
+        <entry key="..\:/Projects/News_Api/app/src/main/res/drawable/tool_bar_backgrounf.xml" value="0.1725" />
         <entry key="..\:/Projects/News_Api/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/News_Api/app/src/main/res/layout/fragment_categories.xml" value="0.253125" />
         <entry key="..\:/Projects/News_Api/app/src/main/res/layout/fragment_catoegery.xml" value="0.2" />
         <entry key="..\:/Projects/News_Api/app/src/main/res/layout/fragment_details_catoegery.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/News_Api/app/src/main/res/layout/fragment_news.xml" value="0.253125" />
+        <entry key="..\:/Projects/News_Api/app/src/main/res/layout/fragment_setting.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/News_Api/app/src/main/res/layout/item_category.xml" value="0.253125" />
         <entry key="..\:/Projects/News_Api/app/src/main/res/layout/item_news.xml" value="0.253125" />
         <entry key="..\:/Projects/News_Api/app/src/main/res/layout/nav_header_main.xml" value="0.253125" />

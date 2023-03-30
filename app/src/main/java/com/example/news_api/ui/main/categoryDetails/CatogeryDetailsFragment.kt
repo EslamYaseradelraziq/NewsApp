@@ -4,24 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.example.news_api.Api.model.ApiManager
+import androidx.lifecycle.ViewModelProvider
 import com.example.news_api.Api.model.SorcesResponse.SourcesItem
-import com.example.news_api.Api.model.SourcesResponse
-import com.example.news_api.ApiConstant
 import com.example.news_api.R
 import com.example.news_api.databinding.FragmentDetailsCatoegeryBinding
 import com.example.news_api.ui.main.Categories.Category
 import com.example.news_api.ui.main.News.NewsFragment
 import com.google.android.material.tabs.TabLayout
-import com.google.gson.Gson
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class CatogeryDetailsFragment : Fragment() {
     lateinit var viewBinding: FragmentDetailsCatoegeryBinding
+    lateinit var viewModel: CategoeryDetailsViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,11 +27,39 @@ class CatogeryDetailsFragment : Fragment() {
         return viewBinding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // initialize ViewModel
+        viewModel = ViewModelProvider(this).get(CategoeryDetailsViewModel::class.java)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadNewSources()
+        viewModel.loadNewSources(category.id)
+        subscribeToLiveData()
         changeNewsFragment(SourcesItem())
 
+    }
+
+    fun subscribeToLiveData() {
+        // reference on data to view model with liveData
+        viewModel.sourcesLiveData.observe(viewLifecycleOwner) {
+            bindSourcesInTabLayout(it)
+        }
+        viewModel.showLoadingLayout.observe(viewLifecycleOwner) { show ->
+            if (show) {
+                showLoadingLayout()
+            } else
+                hideLoadingLayout()
+        }
+        viewModel.showErrorLayout.observe(viewLifecycleOwner) {
+            showErrorLayout(it)
+        }
+
+    }
+
+    private fun hideLoadingLayout() {
+        viewBinding.loadingIndicator.isVisible = false
     }
 
     fun changeNewsFragment(source: SourcesItem) {
@@ -45,41 +69,6 @@ class CatogeryDetailsFragment : Fragment() {
             .commit()
     }
 
-    private fun loadNewSources() {
-        showLoadingLayout()
-        ApiManager
-            .getApis()
-            .getSources(apikey = ApiConstant.apiKey, category.id)
-            .enqueue(object : Callback<SourcesResponse> {
-                override fun onResponse(
-                    call: Call<SourcesResponse>,
-                    response: Response<SourcesResponse>
-                ) {
-                    viewBinding.loadingIndicator.visibility = View.GONE
-                    viewBinding.loadingIndicator.isVisible = false
-                    if (response.isSuccessful) {
-                        bindSourcesInTabLayout(response.body()?.sources)
-                    } else {
-                        val gson = Gson()
-                        val errorResponse =
-                            gson.fromJson(
-                                response.errorBody()?.string(),
-                                SourcesResponse::class.java
-                            )
-                        showErrorLayout(errorResponse.message)
-
-                    }
-
-
-                }
-
-                override fun onFailure(call: Call<SourcesResponse>, t: Throwable) {
-                    showErrorLayout(t.localizedMessage)
-
-                }
-            })
-
-    }
 
     private fun showErrorLayout(message: String?) {
         viewBinding.errorLayout.isVisible = true
@@ -98,6 +87,13 @@ class CatogeryDetailsFragment : Fragment() {
             tab.text = source?.name
             tab.tag = source
             viewBinding.tabLayout.addTab(tab)
+            // custom tabLayout with code
+            (tab.view.layoutParams as LinearLayout.LayoutParams).marginStart = 12
+            (tab.view.layoutParams as LinearLayout.LayoutParams).marginEnd = 12
+//            val layoutPrams = LinearLayout.LayoutParams(tab.view.layoutParams)
+//            layoutPrams.marginEnd = 12
+//            layoutPrams.marginStart = 12
+//            tab.view.layoutParams = layoutPrams
 
         }
         viewBinding.tabLayout

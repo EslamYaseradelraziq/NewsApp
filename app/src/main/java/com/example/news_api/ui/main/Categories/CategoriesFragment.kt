@@ -14,7 +14,7 @@ class CategoriesFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewBinding = FragmentCategoriesBinding.inflate(inflater, container, false)
         return viewBinding.root
 
@@ -37,5 +37,6 @@ class CategoriesFragment : Fragment() {
 
     interface onCategoryClickListener {
         fun onCategoryClick(category: Category)
+
     }
 }

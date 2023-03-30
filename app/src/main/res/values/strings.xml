@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">News_Api</string>
+    <string name="navigation_drower_open">navigation_drower_open</string>
+    <string name="navigation_drower_close">close</string>
 </resources>
